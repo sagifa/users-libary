@@ -22,7 +22,7 @@ const UserLibrary = () => {
   return (
     <Box {...ContainerStyle}>
       <EditUser isOpen={isOpen} onClose={onClose} />
-      <Button mx="1rem" colorScheme="linkedin" onClick={onOpen}>
+      <Button mx="1rem" mt="2rem" colorScheme="linkedin" onClick={onOpen}>
         {text.create}
       </Button>
       <SimpleGrid {...GridStyle}>
