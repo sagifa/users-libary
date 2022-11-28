@@ -1,4 +1,4 @@
-export type UserData = {
+export type UserServerData = {
   name: {
     title: string;
     first: string;
@@ -24,13 +24,9 @@ export type UserData = {
 export type UserDataApp = {
   name: string;
   email: string;
-  picture: {
-    medium: string;
-  };
+  picture: string;
   location: string;
-  login: {
-    uuid: string;
-  };
+  uuid: string;
 };
 
 export type UserUpdateFields = {
@@ -38,4 +34,33 @@ export type UserUpdateFields = {
   email: string;
   location: string;
   uuid: string;
+};
+
+export type UserCreateType = {
+  name: string;
+  email: string;
+  picture: string;
+  location: string;
+};
+
+export type UserState = {
+  isLoading: boolean;
+  isError: boolean;
+  data: UserDataApp[];
+};
+
+export type GetUsersResponse = {
+  results: UserServerData[];
+};
+
+export type UserCardProps = {
+  userData: UserDataApp;
+};
+
+export type CardItems = "name" | "email" | "location" | "uuid";
+
+export type EditUserProps = {
+  isOpen: boolean;
+  onClose: () => void;
+  userData?: UserDataApp;
 };

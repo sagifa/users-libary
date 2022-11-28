@@ -1,7 +1,6 @@
-import { Box, Flex, FlexProps, Icon, IconProps, Text } from "@chakra-ui/react";
 import React from "react";
+import { Flex, FlexProps, IconProps, Text } from "@chakra-ui/react";
 import { StarIcon, AtSignIcon, CalendarIcon } from "@chakra-ui/icons";
-import { JsxElement } from "typescript";
 type PageDataType = {
   title: string;
   icon: "StarIcon" | "AtSignIcon" | "CalendarIcon";

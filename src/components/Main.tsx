@@ -1,12 +1,16 @@
 import React from "react";
+import Footer from "./Footer";
 import Header from "./Header";
-import UserList from "./UserList";
+import Hero from "./Hero";
+import UserLibrary from "./usersLibrary/UserLibrary";
 
 const Main = () => {
   return (
     <>
       <Header />
-      <UserList />
+      <Hero />
+      <UserLibrary />
+      <Footer />
     </>
   );
 };
