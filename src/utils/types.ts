@@ -24,13 +24,9 @@ export type UserData = {
 export type UserDataApp = {
   name: string;
   email: string;
-  picture: {
-    medium: string;
-  };
+  picture: string;
   location: string;
-  login: {
-    uuid: string;
-  };
+  uuid: string;
 };
 
 export type UserUpdateFields = {
@@ -38,4 +34,11 @@ export type UserUpdateFields = {
   email: string;
   location: string;
   uuid: string;
+};
+
+export type UserCreateType = {
+  name: string;
+  email: string;
+  picture: string;
+  location: string;
 };

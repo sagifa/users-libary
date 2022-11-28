@@ -26,7 +26,7 @@ const UserCard = ({ userData }: userCardProps) => {
       setValueToShow(userData.location);
     }
     if (type === "id") {
-      setValueToShow(userData.login.uuid);
+      setValueToShow(userData.uuid);
     }
     return "";
   };
@@ -57,12 +57,12 @@ const UserCard = ({ userData }: userCardProps) => {
         _hover={{ color: "yellow.400" }}
       />
       <EditUser isOpen={isOpen} onClose={onClose} userData={userData} />
-      <DeleteUserButton uuid={userData.login.uuid} />
+      <DeleteUserButton uuid={userData.uuid} />
       <Avatar
         mt="1rem"
         size="xl"
         name={userData.name}
-        src={userData.picture.medium}
+        src={userData.picture}
       />{" "}
       <Box my="2rem">{valueToShow}</Box>
       <Flex gap="1rem" position="absolute" bottom="1rem">

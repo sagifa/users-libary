@@ -1,5 +1,4 @@
 import React from "react";
-import { Field, Form, Formik, FieldInputProps, FormikProps } from "formik";
 import {
   Modal,
   ModalOverlay,
@@ -10,22 +9,27 @@ import {
   FormControl,
   FormLabel,
   Input,
-  ModalFooter,
-  Button,
   FormErrorMessage,
+  Button,
+  ModalFooter,
   useToast,
+  Box,
 } from "@chakra-ui/react";
-import { UserDataApp } from "../utils/types";
+import { Field, Form, Formik, FieldInputProps, FormikProps } from "formik";
 import { useAppDispatch } from "../redux/hooks";
-import { editUserData } from "../redux/userSlice";
+import {
+  validateEmail,
+  validateLocation,
+  validateName,
+  validatePicture,
+} from "./EditUser";
+import { createUser, editUserData } from "../redux/userSlice";
 
-interface EditUserProps {
+interface CreateUserProps {
   isOpen: boolean;
   onClose: () => void;
-  userData: UserDataApp;
 }
-
-const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
+const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
   const dispatch = useAppDispatch();
   const toast = useToast();
 
@@ -38,15 +42,17 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
         <ModalBody pb={6}>
           <Formik
             initialValues={{
-              name: userData.name,
-              email: userData.email,
-              location: userData.location,
+              name: "",
+              email: "",
+              location: "",
+              picture: "",
             }}
             onSubmit={(values, actions) => {
-              dispatch(editUserData({ ...values, uuid: userData.uuid }));
+              console.log(values);
+              dispatch(createUser({ ...values }));
               toast({
-                title: "User updated.",
-                description: "You can close the Edit User window",
+                title: "User Created.",
+                description: "You can close the Create User window",
                 status: "success",
                 duration: 9000,
                 isClosable: true,
@@ -83,7 +89,7 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
                   <FormControl
                     isInvalid={Boolean(form.errors.email && form.touched.email)}
                   >
-                    <FormLabel>Email</FormLabel>
+                    <FormLabel mt="1rem">Email</FormLabel>
                     <Input {...field} placeholder="Email" />
                     <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                   </FormControl>
@@ -103,16 +109,38 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
                       form.errors.location && form.touched.location
                     )}
                   >
-                    <FormLabel>Location</FormLabel>
+                    <FormLabel mt="1rem">Location</FormLabel>
                     <Input {...field} placeholder="Current Living Location" />
                     <FormErrorMessage>{form.errors.location}</FormErrorMessage>
                   </FormControl>
                 )}
               </Field>
-              <Button colorScheme="blue" mr={3} type="submit">
-                Save
-              </Button>
-              <Button onClick={onClose}>Cancel</Button>
+
+              <Field name="picture" validate={validatePicture}>
+                {({
+                  field,
+                  form,
+                }: {
+                  field: FieldInputProps<string>;
+                  form: FormikProps<{ picture: string }>;
+                }) => (
+                  <FormControl
+                    isInvalid={Boolean(
+                      form.errors.picture && form.touched.picture
+                    )}
+                  >
+                    <FormLabel mt="1rem">picture</FormLabel>
+                    <Input {...field} placeholder="insert URL" />
+                    <FormErrorMessage>{form.errors.picture}</FormErrorMessage>
+                  </FormControl>
+                )}
+              </Field>
+              <Box mt="2rem">
+                <Button colorScheme="blue" mr={3} type="submit">
+                  Save
+                </Button>
+                <Button onClick={onClose}>Cancel</Button>
+              </Box>
             </Form>
           </Formik>
         </ModalBody>
@@ -122,53 +150,4 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
   );
 };
 
-export default EditUser;
-
-export function validateName(value: string) {
-  let error;
-  if (!value) {
-    error = "Name is required";
-    return error;
-  } else if (value.length < 3) {
-    error = "Must be min of 3 characters";
-  }
-  return error;
-}
-
-export function validateEmail(value: string) {
-  let error;
-  if (!value) {
-    error = "Email is required";
-    return error;
-  }
-  const validRegex =
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-  if (value.match(validRegex)) {
-  } else {
-    error = "Invalid email address!";
-  }
-  return error;
-}
-
-export function validateLocation(value: string) {
-  let error;
-  if (!value) {
-    error = "Location is required";
-    return error;
-  }
-}
-
-export function validatePicture(value: string) {
-  let error;
-  if (!value) {
-    error = "Picture is required";
-    return error;
-  }
-}
-
-const toast = {
-  title: "User updated.",
-  status: "success",
-  duration: 7000,
-  isClosable: true,
-};
+export default CreateUser;

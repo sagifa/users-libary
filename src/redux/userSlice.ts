@@ -1,12 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { AppThunk, RootState } from "./store";
-import { UserDataApp, UserUpdateFields } from "../utils/types";
+import { UserCreateType, UserDataApp, UserUpdateFields } from "../utils/types";
 import { axiosPaths } from "../utils/axiosPaths";
 import axios from "axios";
 import { GetUsersResponse } from "../components/UserList";
 import { Dispatch } from "react";
 import { parseLocation, parseName } from "../utils/helpers";
+import { v4 as uuidv4 } from "uuid";
 
 interface userDeletePayLoad {
   uuid: string;
@@ -38,14 +39,14 @@ export const userSlice = createSlice({
     },
     deleteUser: (state, action: PayloadAction<any>) => {
       const newUserList = state.data?.filter(
-        (user) => user.login.uuid !== action.payload.uuid
+        (user) => user.uuid !== action.payload.uuid
       );
       if (!newUserList) return;
       state.data = newUserList;
     },
     editUserData: (state, action: PayloadAction<UserUpdateFields>) => {
       const updatedUserList = state.data?.map((user: UserDataApp) => {
-        if (user.login.uuid !== action.payload.uuid) {
+        if (user.uuid !== action.payload.uuid) {
           return { ...user };
         } else {
           return {
@@ -58,6 +59,14 @@ export const userSlice = createSlice({
       });
       state.data = updatedUserList;
     },
+    createUser: (state, action: PayloadAction<UserCreateType>) => {
+      let uuid = uuidv4();
+
+      console.log("action ", action.payload, "uuid ", uuid);
+      console.log("payload", { ...action.payload });
+      const newUser = { ...action.payload, uuid: uuid };
+      state.data?.push(newUser);
+    },
   },
 });
 
@@ -69,6 +78,7 @@ export const {
   setUserListData,
   editUserData,
   deleteUser,
+  createUser,
 } = userSlice.actions;
 // --*--*--*--*--*--*--*--*--*--*--*-- // Selectors
 
@@ -82,11 +92,16 @@ export async function getUsers(dispatch: Dispatch<any>) {
   dispatch(setIsLoading(true));
   try {
     const { data } = await axios.get<GetUsersResponse>(axiosPaths.userList);
-    const res = data.results;
     const list = data.results.map((user) => {
       const name = parseName(user);
       const location = parseLocation(user);
-      return { ...user, name: name, location: location };
+      return {
+        ...user,
+        name: name,
+        location: location,
+        picture: user.picture.medium,
+        uuid: user.login.uuid,
+      };
     });
     dispatch(setUserListData(list));
   } catch (error) {
