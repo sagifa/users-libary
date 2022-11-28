@@ -3,7 +3,7 @@ import { getUsers } from "../../redux/userSlice";
 import UserCard from "./UserCard";
 import { Box, Button, Flex, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { ContainerStyle, GridStyle } from "./styles";
+import { ContainerStyle, CreateButtonStyle, GridStyle } from "./styles";
 import { text } from "../../utils/appConsts";
 import EditUser from "./EditUser";
 
@@ -22,7 +22,7 @@ const UserLibrary = () => {
   return (
     <Box {...ContainerStyle}>
       <EditUser isOpen={isOpen} onClose={onClose} />
-      <Button mx="1rem" mt="2rem" colorScheme="linkedin" onClick={onOpen}>
+      <Button {...CreateButtonStyle} onClick={onOpen}>
         {text.create}
       </Button>
       <SimpleGrid {...GridStyle}>

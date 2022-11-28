@@ -1,5 +1,6 @@
 import {
   BoxProps,
+  ButtonProps,
   FlexProps,
   IconProps,
   SimpleGridProps,
@@ -83,4 +84,11 @@ export const IconDeleteStyle: IconProps = {
   right: "1rem",
   cursor: "pointer",
   _hover: { color: "red.400" },
+};
+
+export const CreateButtonStyle: ButtonProps = {
+  mx: "1rem",
+  mt: "4rem",
+  mb: "1rem",
+  colorScheme: "linkedin",
 };
