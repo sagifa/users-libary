@@ -23,7 +23,7 @@ import {
   EditIcon,
   DeleteIcon,
 } from "@chakra-ui/icons";
-import { UserData } from "../utils/types";
+import { UserData, UserDataApp } from "../utils/types";
 import EditUser from "./EditUser";
 import { useAppDispatch } from "../redux/hooks";
 import { deleteUser } from "../redux/userSlice";
@@ -31,22 +31,20 @@ import DeleteUserButton from "./DeleteUserButton";
 import { parseLocation, parseName } from "../utils/helpers";
 
 type userCardProps = {
-  userData: UserData;
+  userData: UserDataApp;
 };
 const UserCard = ({ userData }: userCardProps) => {
   //   const initValue = parseName(userData);
 
   const setDetailShow = (type: string): string => {
     if (type == "name") {
-      const fullName = parseName(userData);
-      setValueToShow(fullName);
+      setValueToShow(userData.name);
     }
     if (type == "email") {
       setValueToShow(userData.email);
     }
     if (type == "location") {
-      const fullLocation = parseLocation(userData);
-      setValueToShow(fullLocation);
+      setValueToShow(userData.location);
     }
     if (type == "id") {
       setValueToShow(userData.login.uuid);
@@ -54,9 +52,7 @@ const UserCard = ({ userData }: userCardProps) => {
     return "";
   };
 
-  const [valueToShow, setValueToShow] = useState<string>(() =>
-    parseName(userData)
-  );
+  const [valueToShow, setValueToShow] = useState(userData.name);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -84,7 +80,7 @@ const UserCard = ({ userData }: userCardProps) => {
       <Avatar
         mt="1rem"
         size="xl"
-        name={userData.name.first + userData.name.last}
+        name={userData.name}
         src={userData.picture.medium}
       />{" "}
       <Box my="2rem">{valueToShow}</Box>

@@ -14,7 +14,7 @@ import {
   Button,
   FormErrorMessage,
 } from "@chakra-ui/react";
-import { UserData } from "../utils/types";
+import { UserData, UserDataApp } from "../utils/types";
 import { useAppDispatch } from "../redux/hooks";
 import { editUserData } from "../redux/userSlice";
 import { parseLocation, parseName } from "../utils/helpers";
@@ -22,7 +22,7 @@ import { parseLocation, parseName } from "../utils/helpers";
 interface EditUserProps {
   isOpen: boolean;
   onClose: () => void;
-  userData: UserData;
+  userData: UserDataApp;
 }
 
 const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
@@ -36,9 +36,9 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
         <ModalBody pb={6}>
           <Formik
             initialValues={{
-              name: parseName(userData),
+              name: userData.name,
               email: userData.email,
-              location: parseLocation(userData),
+              location: userData.location,
             }}
             onSubmit={(values, actions) => {
               setTimeout(() => {
