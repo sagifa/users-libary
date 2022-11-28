@@ -17,8 +17,8 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { UserDataApp } from "../../utils/types";
-import { useAppDispatch } from "../../redux/hooks";
-import { editUser } from "../../redux/userSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { editUser, selectUsersEmail } from "../../redux/userSlice";
 
 interface EditUserProps {
   isOpen: boolean;
@@ -28,6 +28,7 @@ interface EditUserProps {
 
 const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
   const dispatch = useAppDispatch();
+  const emailList = useAppSelector(selectUsersEmail);
   const toast = useToast();
 
   return (
@@ -44,12 +45,22 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
               location: userData.location,
             }}
             onSubmit={(values, actions) => {
+              if (emailList.includes(values.email)) {
+                toast({
+                  title: "Email not valid",
+                  description: "Email already exists in our system",
+                  status: "warning",
+                  duration: 7000,
+                  isClosable: true,
+                });
+                return;
+              }
               dispatch(editUser({ ...values, uuid: userData.uuid }));
               toast({
                 title: "User updated.",
                 description: "You can close the Edit User window",
                 status: "success",
-                duration: 9000,
+                duration: 7000,
                 isClosable: true,
               });
             }}
@@ -169,9 +180,9 @@ export function validatePicture(value: string) {
   }
 }
 
-const toast = {
+const toastEmailNotUnique = {
   title: "User updated.",
-  status: "success",
+  status: "warning",
   duration: 7000,
   isClosable: true,
 };

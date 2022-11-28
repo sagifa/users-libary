@@ -12,6 +12,7 @@ import axios from "axios";
 import { Dispatch } from "react";
 import { parseLocation, parseName } from "../utils/helpers";
 import { v4 as uuidv4 } from "uuid";
+import { RootState } from "./store";
 
 export const initialState: UserState = {
   isLoading: false,
@@ -83,6 +84,8 @@ export const {
 // export const selectUserListData = (state: RootState) => state.user.data;
 // export const selectIsLoading = (state: RootState) => state.user.isLoading;
 // export const selectIsError = (state: RootState) => state.user.isError;
+export const selectUsersEmail = (state: RootState) =>
+  state.user.data.map((user) => user.email);
 
 // --*--*--*--*--*--*--*--*--*--*--*-- //Functions
 

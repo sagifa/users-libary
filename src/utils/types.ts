@@ -63,7 +63,3 @@ export type CreateUserProps = {
   isOpen: boolean;
   onClose: () => void;
 };
-
-export type UserEmail = {
-  email: string;
-};
