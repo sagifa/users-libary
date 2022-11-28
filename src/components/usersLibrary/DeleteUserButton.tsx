@@ -13,13 +13,12 @@ import React from "react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { useAppDispatch } from "../../redux/hooks";
 import { deleteUser } from "../../redux/userSlice";
-import { IconDeleteStyle } from "./styles";
 import { text } from "../../utils/appConsts";
 
 interface DeleteUserButtonProps {
   uuid: string;
 }
-const DeleteUserButton = ({ uuid }: DeleteUserButtonProps) => {
+const DeleteUserButton = (uuid: DeleteUserButtonProps) => {
   const dispatch = useAppDispatch();
   const handleDelete = () => {
     dispatch(deleteUser(uuid));
@@ -27,7 +26,13 @@ const DeleteUserButton = ({ uuid }: DeleteUserButtonProps) => {
   return (
     <Popover>
       <PopoverTrigger>
-        <DeleteIcon {...IconDeleteStyle} />
+        <DeleteIcon
+          position="absolute"
+          bottom="1rem"
+          right="1rem"
+          cursor="pointer"
+          _hover={{ color: "red.400" }}
+        />
       </PopoverTrigger>
       <Portal>
         <PopoverContent>
