@@ -11,8 +11,8 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { DeleteIcon } from "@chakra-ui/icons";
-import { useAppDispatch } from "../redux/hooks";
-import { deleteUser } from "../redux/userSlice";
+import { useAppDispatch } from "../../redux/hooks";
+import { deleteUser } from "../../redux/userSlice";
 
 interface DeleteUserButtonProps {
   uuid: string;

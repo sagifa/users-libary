@@ -1,29 +1,22 @@
 import React, { useEffect } from "react";
-import { UserData } from "../utils/types";
-import { useDispatch, useSelector } from "react-redux";
-import { getUsers, selectUserListData } from "../redux/userSlice";
+import { getUsers } from "../../redux/userSlice";
 import UserCard from "./UserCard";
 import { Box, Button, Flex, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import CreateUser from "./CreateUser";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 
-export type GetUsersResponse = {
-  results: UserData[];
-};
-
-const UserList = () => {
-  const dispatch = useDispatch();
+const UserLibrary = () => {
+  const dispatch = useAppDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  const userListData = useAppSelector((state) => state.user.data);
   useEffect(() => {
     getUsers(dispatch);
   }, [dispatch]);
 
-  const userListData = useSelector(selectUserListData);
-
   if (!userListData) return <>Loading</>;
 
   return (
-    <Box p="1rem" bgColor="gray.100">
+    <Box p="1rem" pb="4rem" bgColor="gray.100">
       <CreateUser isOpen={isOpen} onClose={onClose} />
       <Button mx="1rem" colorScheme="linkedin" onClick={onOpen}>
         Create User
@@ -43,4 +36,4 @@ const UserList = () => {
     </Box>
   );
 };
-export default UserList;
+export default UserLibrary;

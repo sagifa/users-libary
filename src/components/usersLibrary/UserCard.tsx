@@ -7,35 +7,22 @@ import {
   ViewIcon,
   EditIcon,
 } from "@chakra-ui/icons";
-import { UserDataApp } from "../utils/types";
 import EditUser from "./EditUser";
 import DeleteUserButton from "./DeleteUserButton";
+import { CardItems, UserCardProps } from "../../utils/types";
 
-type userCardProps = {
-  userData: UserDataApp;
-};
-const UserCard = ({ userData }: userCardProps) => {
-  const setDetailShow = (type: string): string => {
-    if (type === "name") {
-      setValueToShow(userData.name);
-    }
-    if (type === "email") {
-      setValueToShow(userData.email);
-    }
-    if (type === "location") {
-      setValueToShow(userData.location);
-    }
-    if (type === "id") {
-      setValueToShow(userData.uuid);
-    }
-    return "";
-  };
-
+const UserCard = ({ userData }: UserCardProps) => {
   const [valueToShow, setValueToShow] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  const setDetailShow = (type: CardItems) => {
+    setValueToShow(userData[type]);
+  };
+
   useEffect(() => {
     setValueToShow(userData.name);
   }, [userData]);
+
   return (
     <Flex
       shadow="2xl"
@@ -68,8 +55,13 @@ const UserCard = ({ userData }: userCardProps) => {
       <Flex gap="1rem" position="absolute" bottom="1rem">
         <InfoIcon
           cursor="pointer"
+          transition="all .2s ease-in-out"
           onMouseEnter={() => setDetailShow("name")}
-          _hover={{ color: "green.300" }}
+          _hover={{
+            color: "green.300",
+            transform: "scale(1.3)",
+            transition: "all .2s ease-in-out",
+          }}
         />
         <AtSignIcon
           cursor="pointer"
@@ -83,7 +75,7 @@ const UserCard = ({ userData }: userCardProps) => {
         />
         <ViewIcon
           cursor="pointer"
-          onMouseEnter={() => setDetailShow("id")}
+          onMouseEnter={() => setDetailShow("uuid")}
           _hover={{ color: "purple.300" }}
         />
       </Flex>

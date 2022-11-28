@@ -1,4 +1,5 @@
 import React from "react";
+import { Field, Form, Formik, FieldInputProps, FormikProps } from "formik";
 import {
   Modal,
   ModalOverlay,
@@ -9,27 +10,23 @@ import {
   FormControl,
   FormLabel,
   Input,
-  FormErrorMessage,
-  Button,
   ModalFooter,
+  Button,
+  FormErrorMessage,
   useToast,
   Box,
 } from "@chakra-ui/react";
-import { Field, Form, Formik, FieldInputProps, FormikProps } from "formik";
-import { useAppDispatch } from "../redux/hooks";
-import {
-  validateEmail,
-  validateLocation,
-  validateName,
-  validatePicture,
-} from "./EditUser";
-import { createUser, editUserData } from "../redux/userSlice";
+import { UserDataApp } from "../../utils/types";
+import { useAppDispatch } from "../../redux/hooks";
+import { editUser } from "../../redux/userSlice";
 
-interface CreateUserProps {
+interface EditUserProps {
   isOpen: boolean;
   onClose: () => void;
+  userData: UserDataApp;
 }
-const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
+
+const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
   const dispatch = useAppDispatch();
   const toast = useToast();
 
@@ -42,17 +39,15 @@ const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
         <ModalBody pb={6}>
           <Formik
             initialValues={{
-              name: "",
-              email: "",
-              location: "",
-              picture: "",
+              name: userData.name,
+              email: userData.email,
+              location: userData.location,
             }}
             onSubmit={(values, actions) => {
-              console.log(values);
-              dispatch(createUser({ ...values }));
+              dispatch(editUser({ ...values, uuid: userData.uuid }));
               toast({
-                title: "User Created.",
-                description: "You can close the Create User window",
+                title: "User updated.",
+                description: "You can close the Edit User window",
                 status: "success",
                 duration: 9000,
                 isClosable: true,
@@ -115,26 +110,6 @@ const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
                   </FormControl>
                 )}
               </Field>
-
-              <Field name="picture" validate={validatePicture}>
-                {({
-                  field,
-                  form,
-                }: {
-                  field: FieldInputProps<string>;
-                  form: FormikProps<{ picture: string }>;
-                }) => (
-                  <FormControl
-                    isInvalid={Boolean(
-                      form.errors.picture && form.touched.picture
-                    )}
-                  >
-                    <FormLabel mt="1rem">picture</FormLabel>
-                    <Input {...field} placeholder="insert URL" />
-                    <FormErrorMessage>{form.errors.picture}</FormErrorMessage>
-                  </FormControl>
-                )}
-              </Field>
               <Box mt="2rem">
                 <Button colorScheme="blue" mr={3} type="submit">
                   Save
@@ -150,4 +125,53 @@ const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
   );
 };
 
-export default CreateUser;
+export default EditUser;
+
+export function validateName(value: string) {
+  let error;
+  if (!value) {
+    error = "Name is required";
+    return error;
+  } else if (value.length < 3) {
+    error = "Must be min of 3 characters";
+  }
+  return error;
+}
+
+export function validateEmail(value: string) {
+  let error;
+  if (!value) {
+    error = "Email is required";
+    return error;
+  }
+  const validRegex =
+    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  if (value.match(validRegex)) {
+  } else {
+    error = "Invalid email address!";
+  }
+  return error;
+}
+
+export function validateLocation(value: string) {
+  let error;
+  if (!value) {
+    error = "Location is required";
+    return error;
+  }
+}
+
+export function validatePicture(value: string) {
+  let error;
+  if (!value) {
+    error = "Picture is required";
+    return error;
+  }
+}
+
+const toast = {
+  title: "User updated.",
+  status: "success",
+  duration: 7000,
+  isClosable: true,
+};

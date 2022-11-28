@@ -1,4 +1,4 @@
-export type UserData = {
+export type UserServerData = {
   name: {
     title: string;
     first: string;
@@ -42,3 +42,19 @@ export type UserCreateType = {
   picture: string;
   location: string;
 };
+
+export interface UserState {
+  isLoading: boolean;
+  isError: boolean;
+  data: UserDataApp[];
+}
+
+export type GetUsersResponse = {
+  results: UserServerData[];
+};
+
+export type UserCardProps = {
+  userData: UserDataApp;
+};
+
+export type CardItems = "name" | "email" | "location" | "uuid";
