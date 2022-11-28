@@ -43,11 +43,11 @@ export type UserCreateType = {
   location: string;
 };
 
-export interface UserState {
+export type UserState = {
   isLoading: boolean;
   isError: boolean;
   data: UserDataApp[];
-}
+};
 
 export type GetUsersResponse = {
   results: UserServerData[];
@@ -59,7 +59,11 @@ export type UserCardProps = {
 
 export type CardItems = "name" | "email" | "location" | "uuid";
 
-export interface CreateUserProps {
+export type CreateUserProps = {
   isOpen: boolean;
   onClose: () => void;
-}
+};
+
+export type UserEmail = {
+  email: string;
+};
