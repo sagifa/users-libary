@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { UserData } from "../utils/types";
 import { useDispatch, useSelector } from "react-redux";
 import { getUsers, selectUserListData } from "../redux/userSlice";
 import UserCard from "./UserCard";
-import { Box, Flex, SimpleGrid } from "@chakra-ui/react";
+import { Box, Button, Flex, SimpleGrid } from "@chakra-ui/react";
 
 export type GetUsersResponse = {
   results: UserData[];
@@ -11,11 +11,10 @@ export type GetUsersResponse = {
 
 const UserList = () => {
   const dispatch = useDispatch();
-  const [userList, setUserList] = useState("");
 
   useEffect(() => {
     getUsers(dispatch);
-  }, []);
+  }, [dispatch]);
 
   const userListData = useSelector(selectUserListData);
 
@@ -23,6 +22,7 @@ const UserList = () => {
 
   return (
     <Box p="1rem" bgColor="gray.100">
+      <Button colorScheme="linkedin">Create User</Button>
       <SimpleGrid
         columns={{ base: 1, sm: 2, lg: 3, xl: 4 }}
         spacing="1rem"

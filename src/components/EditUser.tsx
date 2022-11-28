@@ -13,6 +13,7 @@ import {
   ModalFooter,
   Button,
   FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
 import { UserData, UserDataApp } from "../utils/types";
 import { useAppDispatch } from "../redux/hooks";
@@ -27,6 +28,8 @@ interface EditUserProps {
 
 const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
   const dispatch = useAppDispatch();
+  const toast = useToast();
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -41,13 +44,15 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
               location: userData.location,
             }}
             onSubmit={(values, actions) => {
-              setTimeout(() => {
-                dispatch(
-                  editUserData({ ...values, uuid: userData.login.uuid })
-                );
-                alert(JSON.stringify(values, null, 2));
-                actions.setSubmitting(false);
-              }, 1000);
+              actions.setSubmitting(true);
+              dispatch(editUserData({ ...values, uuid: userData.login.uuid }));
+              toast({
+                title: "Account updated.",
+                description: "You can close the Edit User window",
+                status: "success",
+                duration: 9000,
+                isClosable: true,
+              });
             }}
           >
             {(props) => (
@@ -64,7 +69,7 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
                       isInvalid={Boolean(form.errors.name && form.touched.name)}
                     >
                       <FormLabel>First name</FormLabel>
-                      <Input {...field} placeholder="name" />
+                      <Input {...field} mb="1rem" placeholder="name" />
                       <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                     </FormControl>
                   )}
@@ -84,7 +89,7 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
                       )}
                     >
                       <FormLabel>Email</FormLabel>
-                      <Input {...field} placeholder="Email" />
+                      <Input {...field} mb="1rem" placeholder="Email" />
                       <FormErrorMessage>{form.errors.email}</FormErrorMessage>
                     </FormControl>
                   )}
@@ -104,32 +109,26 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
                       )}
                     >
                       <FormLabel>Location</FormLabel>
-                      <Input {...field} placeholder="Current Living Location" />
+                      <Input
+                        {...field}
+                        mb="2rem"
+                        placeholder="Current Living Location"
+                      />
                       <FormErrorMessage>
                         {form.errors.location}
                       </FormErrorMessage>
                     </FormControl>
                   )}
                 </Field>
-
-                <Button
-                  mt={4}
-                  colorScheme="teal"
-                  isLoading={props.isSubmitting}
-                  type="submit"
-                >
-                  Submit
+                <Button colorScheme="blue" mr={3} type="submit">
+                  Save
                 </Button>
+                <Button onClick={onClose}>Cancel</Button>
               </Form>
             )}
           </Formik>
         </ModalBody>
-        <ModalFooter>
-          <Button colorScheme="blue" mr={3}>
-            Save
-          </Button>
-          <Button onClick={onClose}>Cancel</Button>
-        </ModalFooter>
+        <ModalFooter></ModalFooter>
       </ModalContent>
     </Modal>
   );
@@ -170,3 +169,10 @@ function validateLocation(value: string) {
     return error;
   }
 }
+
+const toast = {
+  title: "User updated.",
+  status: "success",
+  duration: 7000,
+  isClosable: true,
+};

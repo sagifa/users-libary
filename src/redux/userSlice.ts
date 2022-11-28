@@ -44,7 +44,6 @@ export const userSlice = createSlice({
       state.data = newUserList;
     },
     editUserData: (state, action: PayloadAction<UserUpdateFields>) => {
-      if (!state.data) return;
       const updatedUserList = state.data?.map((user: UserDataApp) => {
         if (user.login.uuid !== action.payload.uuid) {
           return { ...user };
@@ -57,7 +56,7 @@ export const userSlice = createSlice({
           };
         }
       });
-      // setUserListData(updatedUserList) need to parse here or parse when i use getUsers and set a new type
+      state.data = updatedUserList;
     },
   },
 });

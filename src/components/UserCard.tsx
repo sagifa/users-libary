@@ -1,60 +1,41 @@
-import React, { useState } from "react";
-import {
-  Avatar,
-  Box,
-  Button,
-  Flex,
-  Popover,
-  PopoverArrow,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
-  Portal,
-  useDisclosure,
-} from "@chakra-ui/react";
+import React, { useEffect, useState } from "react";
+import { Avatar, Box, Flex, useDisclosure } from "@chakra-ui/react";
 import {
   InfoIcon,
   AtSignIcon,
   ArrowDownIcon,
   ViewIcon,
   EditIcon,
-  DeleteIcon,
 } from "@chakra-ui/icons";
-import { UserData, UserDataApp } from "../utils/types";
+import { UserDataApp } from "../utils/types";
 import EditUser from "./EditUser";
-import { useAppDispatch } from "../redux/hooks";
-import { deleteUser } from "../redux/userSlice";
 import DeleteUserButton from "./DeleteUserButton";
-import { parseLocation, parseName } from "../utils/helpers";
 
 type userCardProps = {
   userData: UserDataApp;
 };
 const UserCard = ({ userData }: userCardProps) => {
-  //   const initValue = parseName(userData);
-
   const setDetailShow = (type: string): string => {
-    if (type == "name") {
+    if (type === "name") {
       setValueToShow(userData.name);
     }
-    if (type == "email") {
+    if (type === "email") {
       setValueToShow(userData.email);
     }
-    if (type == "location") {
+    if (type === "location") {
       setValueToShow(userData.location);
     }
-    if (type == "id") {
+    if (type === "id") {
       setValueToShow(userData.login.uuid);
     }
     return "";
   };
 
-  const [valueToShow, setValueToShow] = useState(userData.name);
+  const [valueToShow, setValueToShow] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
-
+  useEffect(() => {
+    setValueToShow(userData.name);
+  }, [userData]);
   return (
     <Flex
       shadow="2xl"
