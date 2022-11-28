@@ -43,7 +43,10 @@ const EditUser = ({ isOpen, onClose, userData }: EditUserProps) => {
               picture: "",
             }}
             onSubmit={(values) => {
-              if (emailList.includes(values.email)) {
+              if (
+                userData?.email !== values.email &&
+                emailList.includes(values.email)
+              ) {
                 toast({
                   title: "Email not valid",
                   description: "Email already exists in our system",
