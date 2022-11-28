@@ -78,7 +78,7 @@ export default function Footer() {
       <Container as={Stack} maxW={"6xl"} py={10}>
         <SimpleGrid
           templateColumns={{ sm: "1fr 1fr", md: "2fr 1fr 1fr 2fr" }}
-          spacing={{ base: "2rem", md: "10rem" }}
+          spacing={{ base: "2rem", md: "9rem" }}
         >
           <Stack spacing={6}>
             <Box>
@@ -113,7 +113,7 @@ export default function Footer() {
             <ListHeader>Stay up to date</ListHeader>
             <Stack direction={"row"}>
               <Input
-                placeholder={"Your email address"}
+                placeholder={"Your email"}
                 bg={useColorModeValue("blackAlpha.100", "whiteAlpha.100")}
                 border={0}
                 _focus={{

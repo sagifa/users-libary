@@ -1,11 +1,9 @@
 import {
-  AvatarProps,
   BoxProps,
   FlexProps,
   IconProps,
   SimpleGridProps,
 } from "@chakra-ui/react";
-import { MouseEventHandler } from "react";
 
 export const ContainerStyle: BoxProps = {
   p: "1rem",

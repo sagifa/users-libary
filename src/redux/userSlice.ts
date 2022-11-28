@@ -81,9 +81,9 @@ export const {
 
 // --*--*--*--*--*--*--*--*--*--*--*-- // Selectors
 
-// export const selectUserListData = (state: RootState) => state.user.data;
-// export const selectIsLoading = (state: RootState) => state.user.isLoading;
-// export const selectIsError = (state: RootState) => state.user.isError;
+export const selectUserListData = (state: RootState) => state.user.data;
+export const selectIsLoading = (state: RootState) => state.user.isLoading;
+export const selectIsError = (state: RootState) => state.user.isError;
 export const selectUsersEmail = (state: RootState) =>
   state.user.data.map((user) => user.email);
 

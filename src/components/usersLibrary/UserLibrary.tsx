@@ -2,10 +2,10 @@ import React, { useEffect } from "react";
 import { getUsers } from "../../redux/userSlice";
 import UserCard from "./UserCard";
 import { Box, Button, Flex, SimpleGrid, useDisclosure } from "@chakra-ui/react";
-import CreateUser from "./CreateUser";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { ContainerStyle, GridStyle } from "./styles";
 import { text } from "../../utils/appConsts";
+import EditUser from "./EditUser";
 
 const UserLibrary = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ const UserLibrary = () => {
 
   return (
     <Box {...ContainerStyle}>
-      <CreateUser isOpen={isOpen} onClose={onClose} />
+      <EditUser isOpen={isOpen} onClose={onClose} />
       <Button mx="1rem" colorScheme="linkedin" onClick={onOpen}>
         {text.create}
       </Button>

@@ -59,7 +59,8 @@ export type UserCardProps = {
 
 export type CardItems = "name" | "email" | "location" | "uuid";
 
-export type CreateUserProps = {
+export type EditUserProps = {
   isOpen: boolean;
   onClose: () => void;
+  userData?: UserDataApp;
 };
