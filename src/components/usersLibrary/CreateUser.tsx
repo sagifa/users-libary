@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Modal,
   ModalOverlay,
@@ -23,13 +23,12 @@ import {
   validateName,
   validatePicture,
 } from "./EditUser";
-import { createUser, editUser } from "../../redux/userSlice";
+import { createUser } from "../../redux/userSlice";
+import { CreateUserProps } from "../../utils/types";
+import { text } from "../../utils/appConsts";
 
-interface CreateUserProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
 const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
+  const [buttonName, setButtonName] = useState("Cancel");
   const dispatch = useAppDispatch();
   const toast = useToast();
 
@@ -37,7 +36,7 @@ const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Edit User</ModalHeader>
+        <ModalHeader>{text.create}</ModalHeader>
         <ModalCloseButton />
         <ModalBody pb={6}>
           <Formik
@@ -47,8 +46,7 @@ const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
               location: "",
               picture: "",
             }}
-            onSubmit={(values, actions) => {
-              console.log(values);
+            onSubmit={(values) => {
               dispatch(createUser({ ...values }));
               toast({
                 title: "User Created.",
@@ -57,6 +55,7 @@ const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
                 duration: 9000,
                 isClosable: true,
               });
+              setButtonName("Close");
             }}
           >
             <Form>
@@ -71,7 +70,7 @@ const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
                   <FormControl
                     isInvalid={Boolean(form.errors.name && form.touched.name)}
                   >
-                    <FormLabel>First name</FormLabel>
+                    <FormLabel>Full Name</FormLabel>
                     <Input {...field} placeholder="name" />
                     <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                   </FormControl>
@@ -139,7 +138,7 @@ const CreateUser = ({ isOpen, onClose }: CreateUserProps) => {
                 <Button colorScheme="blue" mr={3} type="submit">
                   Save
                 </Button>
-                <Button onClick={onClose}>Cancel</Button>
+                <Button onClick={onClose}>{buttonName}</Button>
               </Box>
             </Form>
           </Formik>

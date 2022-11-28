@@ -4,31 +4,30 @@ import UserCard from "./UserCard";
 import { Box, Button, Flex, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import CreateUser from "./CreateUser";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { ContainerStyle, GridStyle } from "./styles";
+import { text } from "../../utils/appConsts";
 
 const UserLibrary = () => {
   const dispatch = useAppDispatch();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const userListData = useAppSelector((state) => state.user.data);
+  const isLoading = useAppSelector((state) => state.user.isLoading);
+
   useEffect(() => {
     getUsers(dispatch);
   }, [dispatch]);
 
-  if (!userListData) return <>Loading</>;
+  if (isLoading) return <>{text.loading}</>;
 
   return (
-    <Box p="1rem" pb="4rem" bgColor="gray.100">
+    <Box {...ContainerStyle}>
       <CreateUser isOpen={isOpen} onClose={onClose} />
       <Button mx="1rem" colorScheme="linkedin" onClick={onOpen}>
-        Create User
+        {text.create}
       </Button>
-      <SimpleGrid
-        columns={{ base: 1, sm: 2, lg: 3, xl: 4, "2xl": 5 }}
-        spacing="1rem"
-        p="1rem"
-        justifyContent="end"
-      >
+      <SimpleGrid {...GridStyle}>
         {userListData.map((user) => (
-          <Flex key={user.uuid} justifyContent="center">
+          <Flex key={user.uuid}>
             <UserCard userData={user} />
           </Flex>
         ))}
