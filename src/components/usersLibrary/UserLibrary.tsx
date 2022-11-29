@@ -1,27 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { getUsers } from "../../redux/userSlice";
 import UserCard from "./UserCard";
-import {
-  Box,
-  Button,
-  Flex,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  SimpleGrid,
-  useDisclosure,
-} from "@chakra-ui/react";
+import { Box, Button, Flex, SimpleGrid, useDisclosure } from "@chakra-ui/react";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import {
-  ContainerStyle,
-  CreateButtonStyle,
-  GridStyle,
-  SearchBarStyle,
-} from "./styles";
+import { ContainerStyle, CreateButtonStyle, GridStyle } from "./styles";
 import { text } from "../../utils/appConsts";
 import EditUser from "./EditUser";
 import { UserDataApp } from "../../utils/types";
-import { Search2Icon } from "@chakra-ui/icons";
+import SearchBar from "./SearchBar";
 
 const UserLibrary = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -43,20 +29,12 @@ const UserLibrary = () => {
   if (isLoading) return <>{text.loading}</>;
 
   return (
-    <Box {...ContainerStyle}>
+    <Box id="users" {...ContainerStyle}>
       <EditUser isOpen={isOpen} onClose={onClose} />
       <Button {...CreateButtonStyle} onClick={onOpen}>
         {text.create}
       </Button>
-      <Flex w="30%" mx="auto">
-        <InputGroup>
-          <InputLeftElement children={<Search2Icon color="gray.300" />} />
-          <Input
-            {...SearchBarStyle}
-            onChange={(e) => setSearchValue(e.target.value)}
-          />
-        </InputGroup>
-      </Flex>
+      <SearchBar setter={setSearchValue} />
       <SimpleGrid {...GridStyle}>
         {userListData.map((user) => {
           if (!isStrInObg(user, searchValue)) return "";

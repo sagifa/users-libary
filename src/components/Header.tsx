@@ -1,16 +1,6 @@
 import React from "react";
 import { Flex, FlexProps, IconProps, Text } from "@chakra-ui/react";
-import { StarIcon, AtSignIcon, CalendarIcon } from "@chakra-ui/icons";
-type PageDataType = {
-  title: string;
-  icon: "StarIcon" | "AtSignIcon" | "CalendarIcon";
-  color: string;
-};
-const PageData: PageDataType = {
-  title: "Hero",
-  icon: "StarIcon",
-  color: "yellow.300",
-};
+import { AtSignIcon, CalendarIcon } from "@chakra-ui/icons";
 
 const navbarId = "navbar";
 export const handleClickScroll = (id: string) => {
@@ -27,30 +17,20 @@ export const handleClickScroll = (id: string) => {
 };
 
 const Header = () => {
-  const iconSelector = {
-    StarIcon: <StarIcon />,
-    AtSignIcon: <StarIcon />,
-    CalendarIcon: <StarIcon />,
-  };
-  const IconComponent = iconSelector[PageData.icon];
   return (
     <Flex
       id={navbarId}
       shadow="md"
       h="4rem"
       alignItems="center"
-      justifyContent="space-evenly"
+      pl="4rem"
+      gap="4rem"
     >
-      <Flex {...ItemBoxStyle}>
-        {/* <IconComponent  {...IconStyle} color={PageData.color} /> */}
-        <StarIcon w={8} h={8} color={PageData.color} />
-        <Text>{PageData.title}</Text>
-      </Flex>
-      <Flex {...ItemBoxStyle}>
+      <Flex {...ItemBoxStyle} onClick={() => handleClickScroll("users")}>
         <CalendarIcon {...IconStyle} color="blue.300" />
         <Text>Users</Text>
       </Flex>
-      <Flex {...ItemBoxStyle}>
+      <Flex {...ItemBoxStyle} onClick={() => handleClickScroll("footer")}>
         <AtSignIcon {...IconStyle} color="red.300" />
         <Text>About Us</Text>
       </Flex>
@@ -66,9 +46,9 @@ export const IconStyle: IconProps = {
 };
 
 export const ItemBoxStyle: FlexProps = {
+  cursor: "pointer",
   alignItems: "center",
   gap: "1rem",
-  cursor: "pointer",
   transition: "all .2s ease-in-out",
   _hover: {
     transform: "scale(1.3)",
