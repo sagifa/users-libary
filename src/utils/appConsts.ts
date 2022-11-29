@@ -11,4 +11,5 @@ export const text = {
   save: "Save",
   close: "Close",
   cancel: "Cancel",
+  searchbar: "Search user by name / email / location / id",
 };

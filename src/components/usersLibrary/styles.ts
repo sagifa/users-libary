@@ -3,8 +3,10 @@ import {
   ButtonProps,
   FlexProps,
   IconProps,
+  InputProps,
   SimpleGridProps,
 } from "@chakra-ui/react";
+import { text } from "../../utils/appConsts";
 
 export const ContainerStyle: BoxProps = {
   p: "1rem",
@@ -88,7 +90,13 @@ export const IconDeleteStyle: IconProps = {
 
 export const CreateButtonStyle: ButtonProps = {
   mx: "1rem",
-  mt: "4rem",
-  mb: "1rem",
+  mt: "2rem",
   colorScheme: "linkedin",
+};
+
+export const SearchBarStyle: InputProps = {
+  borderRadius: "15px",
+  mb: "1rem",
+  bgColor: "white",
+  placeholder: text.searchbar,
 };
