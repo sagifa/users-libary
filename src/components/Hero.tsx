@@ -11,7 +11,7 @@ import Illustration from "./Illustration";
 
 const Hero = () => {
   return (
-    <Container maxW={"5xl"}>
+    <Container id="hero" maxW={"5xl"}>
       <Stack
         textAlign={"center"}
         align={"center"}

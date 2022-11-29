@@ -100,3 +100,9 @@ export const SearchBarStyle: InputProps = {
   bgColor: "white",
   placeholder: text.searchbar,
 };
+
+export const SearchBarBoxStyle: InputProps = {
+  w: { base: "60%", md: "30%" },
+  mx: "auto",
+  mt: "1rem",
+};
