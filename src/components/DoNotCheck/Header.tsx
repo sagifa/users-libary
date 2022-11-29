@@ -7,11 +7,7 @@ export const handleClickScroll = (id: string) => {
   const navHight = document.getElementById(navbarId)?.offsetHeight || 0;
   const element = document.getElementById(id);
   if (element) {
-    const y =
-      element.getBoundingClientRect().top +
-      window.scrollY -
-      navHight -
-      navHight * 1.1;
+    const y = element.getBoundingClientRect().top + window.scrollY - navHight;
     window.scrollTo({ top: y, behavior: "smooth" });
   }
 };
