@@ -18,14 +18,7 @@ export const handleClickScroll = (id: string) => {
 
 const Header = () => {
   return (
-    <Flex
-      id={navbarId}
-      shadow="md"
-      h="4rem"
-      alignItems="center"
-      pl="4rem"
-      gap="4rem"
-    >
+    <Flex id={navbarId} {...HeaderContainerStyle}>
       <Flex {...ItemBoxStyle} onClick={() => handleClickScroll("users")}>
         <CalendarIcon {...IconStyle} color="blue.300" />
         <Text>Users</Text>
@@ -40,12 +33,19 @@ const Header = () => {
 
 export default Header;
 
-export const IconStyle: IconProps = {
+const IconStyle: IconProps = {
   w: 8,
   h: 8,
 };
 
-export const ItemBoxStyle: FlexProps = {
+const HeaderContainerStyle: FlexProps = {
+  shadow: "md",
+  h: "4rem",
+  alignItems: "center",
+  pl: "4rem",
+  gap: "4rem",
+};
+const ItemBoxStyle: FlexProps = {
   cursor: "pointer",
   alignItems: "center",
   gap: "1rem",

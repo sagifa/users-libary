@@ -1,7 +1,7 @@
 import React from "react";
-import Footer from "./Footer";
-import Header from "./Header";
-import Hero from "./Hero";
+import Footer from "./DoNotCheck/Footer";
+import Header from "./DoNotCheck/Header";
+import Hero from "./DoNotCheck/Hero";
 import UserLibrary from "./usersLibrary/UserLibrary";
 
 const Main = () => {

@@ -42,6 +42,7 @@ export const EditIconStyle: IconProps = {
 };
 
 export const IconNameStyle: IconProps = {
+  boxSize: "1.2rem",
   cursor: "pointer",
   transition: "all .2s ease-in-out",
   _hover: {
@@ -52,6 +53,7 @@ export const IconNameStyle: IconProps = {
 };
 
 export const IconEmailStyle: IconProps = {
+  boxSize: "1.2rem",
   cursor: "pointer",
   transition: "all .2s ease-in-out",
   _hover: {
@@ -61,6 +63,7 @@ export const IconEmailStyle: IconProps = {
   },
 };
 export const IconLocationStyle: IconProps = {
+  boxSize: "1.2rem",
   cursor: "pointer",
   transition: "all .2s ease-in-out",
   _hover: {
@@ -71,6 +74,7 @@ export const IconLocationStyle: IconProps = {
 };
 
 export const IconIdStyle: IconProps = {
+  boxSize: "1.2rem",
   cursor: "pointer",
   transition: "all .2s ease-in-out",
   _hover: {
