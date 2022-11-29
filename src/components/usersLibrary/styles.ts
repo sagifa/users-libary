@@ -51,7 +51,6 @@ export const IconNameStyle: IconProps = {
     transition: "all .2s ease-in-out",
   },
 };
-
 export const IconEmailStyle: IconProps = {
   boxSize: "1.2rem",
   cursor: "pointer",
